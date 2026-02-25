@@ -14,7 +14,7 @@ cd "$APP_DIR" || { echo "ERROR: app dir not found: $APP_DIR" >> "$LOG_FILE"; exi
 # make sure we're on the right branch
 git fetch origin
 git checkout "$GIT_BRANCH"
-git pull --rebase origin "$GIT_BRANCH" >> "$LOG_FILE" 2>&1
+git pull --rebase
 
 # optional: install/upgrade dependencies
 if [ -f "$APP_DIR/requirements.txt" ]; then
