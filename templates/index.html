@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Song Lister</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #0f2027, #203a2e, #2c7744);
+        color: #e8f5e9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    h1 {
+        margin-top: 40px;
+        font-size: 48px;
+        text-align: center;
+        color: #b9f6ca;
+        text-shadow: 0 0 15px rgba(0, 255, 150, 0.6);
+    }
+
+    input[type=text] {
+        width: 60%;
+        max-width: 500px;
+        padding: 12px 15px;
+        margin: 20px 0;
+        border-radius: 30px;
+        border: 2px solid #00c853;
+        outline: none;
+        background-color: #1b4332;
+        color: #e8f5e9;
+        font-size: 16px;
+        transition: 0.3s ease;
+    }
+
+    input[type=text]:focus {
+        border-color: #69f0ae;
+        box-shadow: 0 0 12px #69f0ae;
+    }
+
+    button {
+        background: linear-gradient(90deg, #00c853, #69f0ae);
+        color: #003300;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 30px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 200, 83, 0.4);
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(105, 240, 174, 0.6);
+    }
+
+    #result_list {
+        list-style: none;
+        padding: 0;
+        margin-top: 30px;
+        width: 60%;
+        max-width: 500px;
+    }
+
+    #result_list li {
+        background-color: #1b4332;
+        margin: 10px 0;
+        padding: 12px 15px;
+        border-radius: 12px;
+        border-left: 5px solid #69f0ae;
+        transition: 0.3s ease;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+
+    #result_list li:hover {
+        background-color: #2d6a4f;
+        transform: scale(1.02);
+    }
+
+    .song-info {
+        flex: 1;
+    }
+
+    #result_list img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid #69f0ae;
+    }
+    .subheader {
+        margin-top: 10px;
+        font-size: 20px;
+        font-weight: 300;
+        color: #a5d6a7;
+        text-align: center;
+        letter-spacing: 1px;
+        opacity: 0.9;
+    }
+    .song-title {
+        font-size: 22px;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 4px;
+    }
+
+    .artist-name {
+        font-size: 14px;
+        color: #a5d6a7;
+        opacity: 0.9;
+    }
+
+</style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        function search() {
+            //1. get string from search button
+            console.log("Button is clicked");
+            var artist = $("#artist_input").val().trim();
+            console.log("Artist: " + artist);
+            //2 call backend server URL search/<artist> to get results
+            $.ajax({
+                url: "/search/" + encodeURIComponent(artist),
+                method: "GET",
+                dataType: "json",
+                success: function (data){
+                    {#console.log("Success: ", data);#}
+                    //3 render results under the list
+                    $("#result_list").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        console.log("test: " + data[i].name);
+                        console.log("test: " + data[i].artist);
+                        $("#result_list").append(
+                            "<li>" +
+                            "<div class='song-info'>" +
+                                "<div class='song-title'>" + data[i].name + "</div>" +
+                                "<div class='artist-name'>" + data[i].artist + "</div>" +
+                            "</div>" +
+                            "<img src='" + data[i].image_url + "' alt='Album Cover'>" +
+                            "</li>"
+                        );
+                    }
+                },
+                error: function (xhr, status, err){
+                    console.error("Error:", status, err, xhr.responseText);
+                }
+            })
+
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to the Song Lister</h1>
+    <h2 class="subheader">Enter in an artists name to see their songs</h2>
+    <input id="artist_input" type="text"></input>
+    <button onclick="search()">Search</button>
+    <ul id="result_list">
+
+    </ul>
+
+</body>
+</html>
