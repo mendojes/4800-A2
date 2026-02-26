@@ -5,7 +5,7 @@ set -euo pipefail
 APP_DIR="$HOME/4800-A2"    # change if needed
 APP_CMD="python3.13 app.py"
 LOG_FILE="$APP_DIR/log.txt"
-GIT_BRANCH="main"
+#GIT_BRANCH="main"
 
 echo "===== Deploy started at $(date -u) =====" >> "$LOG_FILE"
 
@@ -13,7 +13,8 @@ cd "$APP_DIR" || { echo "ERROR: app dir not found: $APP_DIR" >> "$LOG_FILE"; exi
 
 # make sure we're on the right branch
 git fetch origin
-git checkout "$GIT_BRANCH"
+#CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+#git pull --rebase origin "$CURRENT_BRANCH"
 git pull --rebase
 
 # optional: install/upgrade dependencies
