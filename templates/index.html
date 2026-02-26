@@ -119,6 +119,14 @@
         color: #a5d6a7;
         opacity: 0.9;
     }
+    .example-text {
+        margin-top: 5px;
+        font-size: 14px;
+        color: #81c784;
+        opacity: 0.85;
+        text-align: center;
+        font-style: italic;
+    }
 
 </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -162,6 +170,9 @@
 <body>
     <h1>Welcome to the Song Lister App</h1>
     <h2 class="subheader">Enter in an artist's name to see their songs</h2>
+    <p class="example-text">
+        Examples: Michael Jackson, Masayoshi Takanaka, Ado, Ginger Root
+    </p>
     <input id="artist_input" type="text"></input>
     <button onclick="search()">Search</button>
     <ul id="result_list">
